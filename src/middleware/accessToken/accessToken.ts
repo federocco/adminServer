@@ -5,7 +5,7 @@ dotenv.config();
 
 import { AccessTokenRequest } from './typings';
 
-const expiresIn = '1d';
+const expiresIn = '30s';
 
 export const generateAccessToken = (payload: AccessTokenRequest): string => {
   return jwt.sign(

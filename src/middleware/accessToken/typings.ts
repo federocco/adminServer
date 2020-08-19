@@ -3,7 +3,7 @@ export interface AccessTokenRequest {
   username: string;
   type: string;
   email: string;
-  idazien: number;
+  companyId: number;
 }
 
 export interface AccessToken extends AccessTokenRequest {
