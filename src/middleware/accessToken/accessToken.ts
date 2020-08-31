@@ -3,9 +3,9 @@ import * as jwt from 'jsonwebtoken';
 import * as dotenv from 'dotenv';
 dotenv.config();
 
-import { AccessTokenRequest } from './typings';
+import { AccessTokenRequest, AccessToken } from './typings';
 
-const expiresIn = '30s';
+const expiresIn = '10m';
 
 export const generateAccessToken = (payload: AccessTokenRequest): string => {
   return jwt.sign(
@@ -37,13 +37,14 @@ export const authenticateToken = (
     token,
     process.env.JWT_TOKEN_SECRET as string,
     // (err, payload): Response => {
-    (err): Response => {
+    (err, decoded: AccessToken): Response => {
       if (err) {
         console.log('JWT Token is invalid or expired');
-        return res.sendStatus(403); // if the token is expired or it is not valid
+        return res.status(401).send({ error: 'pippo' }); // 401 Unauthorized: if the token is expired or it is not valid
       }
 
       // req.user = payload;
+      req.userToken = decoded;
 
       next();
     },

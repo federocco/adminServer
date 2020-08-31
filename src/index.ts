@@ -15,8 +15,8 @@ import { getDatabase } from './database';
 
 // Controllers
 import { get404 } from './controller/error';
-import userRoutes from './routes/user/user';
-import reportRoutes from './routes/reports/report';
+import userRoutes from './routes/user';
+import driverRoutes from './routes/driver';
 
 const app = express();
 app.use(bodyParser({ extended: false }));
@@ -26,7 +26,7 @@ app.use(cors());
 getDatabase()
   .then(async () => {
     app.use('/users', userRoutes);
-    app.use('/reports', reportRoutes);
+    app.use('/drivers', driverRoutes);
 
     app.get('/', (req, res) => {
       res.send(`Hello World on port ${port}`);

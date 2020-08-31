@@ -1,12 +1,13 @@
 import * as crypto from 'crypto';
-import { Request, Response } from 'express';
+import { Response, Request } from 'express';
 import * as jwt from 'jsonwebtoken';
 
 import { User } from '../database/models/user.model';
 import { generateAccessToken } from '../middleware/accessToken/accessToken';
+import { LoginPayload } from '../routes/user/user';
 
 export const loginUser = async (
-  req: Request,
+  req: Request<Record<string, string>, unknown, LoginPayload>,
   res: Response,
 ): Promise<Response> => {
   try {
@@ -16,7 +17,6 @@ export const loginUser = async (
       jwt.verify(
         sourceToken,
         process.env.JWT_TOKEN_SECRET as string,
-        // (err, payload): Response => {
         (err): Response => {
           if (err) {
             console.log('JWT Token is invalid or expired');
